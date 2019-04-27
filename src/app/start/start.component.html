@@ -1,0 +1,43 @@
+<ng-template [ngIf]="!isAuthenticated() && isRedirecting()">
+    <h1>Welcome to the App!</h1>
+    <div class="text-block" *ngIf="!isAuthenticated()">
+        <p><a routerLink="/auth/signin">Log in</a> to return back to your flights and add some new.</p>
+        <p>Are you a new user? <a routerLink="/auth/signup">Sign up</a> in a minute and get opportunity to make full list of flights.</p>
+    </div>
+</ng-template>
+<ng-template [ngIf]="isAuthenticated() && !isRedirecting()">
+    <h1 *ngIf="!getData().name">Welcome {{getData().email}}!</h1>
+    <h1 *ngIf="getData().name">Welcome {{getData().name}}!</h1>
+    <p class="verification-text" *ngIf="!isVerified()">
+        Please verify your account, to unlock store functions.
+        <br/>
+        If you didn't receive the message to {{ getData().email }},  
+        <a
+        (click)="onVerifyEmail()">send</a> it again! And then refresh the app.</p>
+    <app-status-message></app-status-message>
+
+    <h2>Menu: </h2>
+    <div class="menu-block">
+        <a
+        *ngFor="let item of pages.loggedin"
+        routerLink="{{ item.link }}">
+            <span><mat-icon>{{ item.icon }}</mat-icon> {{ item.text }}</span>
+        </a>
+        <a (click)="onLogout()" style="cursor: pointer">
+            <span><mat-icon>power_settings_new</mat-icon> Log out</span>
+        </a>
+    </div>
+</ng-template>
+<ng-template [ngIf]="isAuthenticated() || isRedirecting()">
+    <br/><br/>
+    <h2>Features:</h2>
+    <div class="features-block">
+        <div class="feature" *ngFor="let feature of features">
+            <div class="feature-image"><img src="{{ feature.img }}" alt="{{ feature.name }}"></div>
+            <div class="feature-text">
+                <h3>{{ feature.header }}</h3>
+                <p>{{ feature.text }}</p>
+            </div>
+        </div>
+    </div>
+</ng-template>

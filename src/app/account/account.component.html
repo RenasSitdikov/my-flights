@@ -1,0 +1,51 @@
+<ng-template [ngIf]="isAuthenticated()">
+  <div class="text-block">
+    <h3 class="header-block">
+      <span>
+        <img class="avatar" *ngIf="getData().photo" src="{{getData().photo}}" alt="">
+        <mat-icon class="avatar" *ngIf="!getData().photo">account_circle</mat-icon>
+      </span>
+      <span *ngIf="!getData().name">{{getData().email}}</span>
+      <span *ngIf="getData().name">{{getData().name}}</span>
+    </h3>
+  </div>
+  <form *ngIf="getData().provider === 'password'" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+    <h5 style="text-align: center">Update your account deatails</h5>
+    <div class="form-wrapper">
+      <mat-form-field>
+        <input matInput type="email" placeholder="E-mail" id="email" formControlName="email">
+        <mat-error *ngIf="accountForm.hasError('email', 'email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Name" id="name" formControlName="name">
+        <mat-error *ngIf="accountForm.hasError('maxlength', 'name')">
+          Name must contain maximum 20 characters
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" id="password" formControlName="password">
+        <mat-error *ngIf="accountForm.hasError('minlength', 'password')">
+          Password must contain at least 6 characters
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password"
+        placeholder="Confirm password"
+        id="repassword"
+        formControlName="repassword"
+        [errorStateMatcher]="matcher">
+        <mat-error *ngIf="accountForm.hasError('notSame')">
+          Password do not match
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-raised-button color="primary" type="submit" [disabled]="accountForm.invalid">Save</button>
+      </div>
+    </div>
+  </form>
+  <div class="text-block">
+    <app-status-message></app-status-message>
+  </div>
+  </ng-template>

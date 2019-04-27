@@ -1,0 +1,50 @@
+<ng-template [ngIf]="!isAuthenticated() && isRedirecting()">
+<form [formGroup]="signinForm" (ngSubmit)="onSignin()" *ngIf="!toggler.checked">
+    <div class="form-wrapper">
+      <mat-form-field>
+        <input matInput type="email" placeholder="E-mail" id="email" formControlName="email">
+        <mat-error *ngIf="signinForm.hasError('email', 'email') && !signinForm.hasError('required', 'email')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="signinForm.hasError('required', 'email')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" id="password" formControlName="password">
+        <mat-error *ngIf="signinForm.hasError('required', 'password')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-raised-button color="primary" type="submit" [disabled]="signinForm.invalid">Sign in</button>
+      </div>
+    </div>
+  </form>
+  <form *ngIf="toggler.checked">
+    <div class="form-wrapper">
+      <mat-form-field>
+        <input matInput type="email" placeholder="E-mail" id="resetPassword" [formControl]="resetForm">
+        <mat-error *ngIf="resetForm.hasError('email') && !resetForm.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="resetForm.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-raised-button color="primary" [disabled]="resetForm.invalid" (click)="resetPassword()">Reset password</button>
+      </div>
+    </div>
+  </form>
+  <div class="text-block">
+    <app-status-message></app-status-message>
+    <p><mat-slide-toggle [checked]="false" #toggler>I forgot my password</mat-slide-toggle></p>
+    <p>Doesn't have an account? Just <a routerLink="/auth/signup">sign up</a>.</p>
+    <h4>Or auto log in via:<br/><br/>
+      <a mat-mini-fab color="primary" (click)="onSigninProvider('google')"><i class="icon-google"></i></a>
+      <!-- <a mat-mini-fab color="primary" (click)="onSigninProvider('facebook')"><i class="icon-facebook"></i></a> -->
+      <!-- <a mat-mini-fab color="primary" (click)="onSigninProvider('github')"><i class="icon-github"></i></a> -->
+    </h4>
+</div>
+</ng-template>

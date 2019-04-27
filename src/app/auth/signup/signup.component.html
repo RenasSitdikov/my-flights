@@ -1,0 +1,49 @@
+<ng-template [ngIf]="!isAuthenticated() && isRedirecting()">
+<form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+  <div class="form-wrapper">
+    <mat-form-field>
+      <input matInput type="email" placeholder="E-mail" id="email" formControlName="email">
+      <mat-error *ngIf="signupForm.hasError('email', 'email') && !signupForm.hasError('required', 'email')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="signupForm.hasError('required', 'email')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Password" id="password" formControlName="password">
+      <mat-error *ngIf="signupForm.hasError('required', 'password')">
+        Password is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="!signupForm.hasError('required', 'password') && signupForm.hasError('minlength', 'password')">
+        Password must contain at least 6 characters
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password"
+      placeholder="Confirm password"
+      id="repassword"
+      formControlName="repassword"
+      [errorStateMatcher]="matcher">
+      <mat-error *ngIf="signupForm.hasError('required', 'repassword')">
+        Please confirm the password
+      </mat-error>
+      <mat-error *ngIf="signupForm.hasError('notSame') && !signupForm.hasError('required', 'repassword')">
+        Password do not match
+      </mat-error>
+    </mat-form-field>
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="signupForm.invalid">Sign up</button>
+    </div>
+  </div>
+</form>
+<div class="text-block">
+  <app-status-message></app-status-message>
+  <p>Already have an account? Just <a routerLink="/auth/signin">sign in</a>.</p>
+  <h4>Or auto log in via:<br/><br/>
+    <a mat-mini-fab color="primary" (click)="onSigninProvider('google')"><i class="icon-google"></i></a>
+    <!-- <a mat-mini-fab color="primary" (click)="onSigninProvider('facebook')"><i class="icon-facebook"></i></a> -->
+    <!-- <a mat-mini-fab color="primary" (click)="onSigninProvider('github')"><i class="icon-github"></i></a> -->
+  </h4>
+</div>
+</ng-template>

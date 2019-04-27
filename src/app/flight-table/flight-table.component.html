@@ -1,0 +1,91 @@
+<app-status-message></app-status-message>
+<ng-template [ngIf]="isAuthenticated()">
+<mat-form-field #filterField>
+    <input matInput (keyup)="applyFilter($event.target.value)" #filter placeholder="Filter" [(ngModel)]="filterValue">
+    <button mat-button matSuffix mat-icon-button *ngIf="filterValue"
+    aria-label="Clear" (click)="applyFilter(''); filterValue = ''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+<table mat-table
+[dataSource]="dataSource"
+multiTemplateDataRows>
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+    <th mat-header-cell *matHeaderCellDef> {{column | titlecase}}</th>
+    <td mat-cell *matCellDef="let element"
+    > {{ column === 'date' && element[column] ? element[column].format("D MMM YYYY") : 
+    column === 'date' && !element[column] ? '' : element[column]}}</td>
+  </ng-container>
+
+<!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+<ng-container matColumnDef="expandedDetail">
+  <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+    <div class="flight-detail"
+      [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+      <div class="flight-image">
+        <a
+        matTooltip="View image in new tab"
+        matTooltipPosition="right"
+        href="{{element.photo}}"
+        target="_blank">
+          <img src="{{element.photo}}" alt="{{element.aircraft}}">
+        </a>
+      </div>
+      <div class="flight-description-block flight-description-block-1">
+        <p *ngIf="element.flight"><b>Flight:</b> {{element.flight}}</p>
+        <p *ngIf="element.seat"><b>Seat:</b> {{element.seat}}</p>
+        <p *ngIf="element.forigin"><b>Origin:</b> {{element.forigin}}</p>
+        <p *ngIf="element.fdestination"><b>Destination:</b> {{element.fdestination}}</p>
+        <p *ngIf="element.altflight"><b>Alt flight number:</b> {{element.altflight}}</p>
+        <p *ngIf="element.altairline"><b>Alt airline:</b> {{element.altairline}}</p>
+      </div>
+      <div class="flight-description-block flight-description-block-2">
+        <p *ngIf="element.name"><b>Airplane name:</b> {{element.name}}</p>
+        <p *ngIf="element.msn"><b>MSN:</b> {{element.msn}}</p>
+        <p *ngIf="element.ff"><b>First flight:</b> {{element.ff.format("D MMM YYYY")}}</p>
+        <p *ngIf="element.age"><b>Age at the flight:</b> {{humanizeAge(element.age)}}</p>
+      </div>
+      <div class="flight-description-block flight-description-block-buttons">
+        <p>
+          <a matTooltip="Edit" matTooltipPosition="left" routerLink="/flights-manager/{{element.n}}/edit">
+            <mat-icon>edit</mat-icon>
+          </a>
+        </p>
+        <p>
+          <a matTooltip="Copy" matTooltipPosition="left" routerLink="/flights-manager/{{element.n}}/copy">
+            <mat-icon>library_add</mat-icon>
+          </a>
+        </p>
+        <p>
+          <a matTooltip="All details" matTooltipPosition="left" routerLink="/flights/{{element.n}}">
+            <mat-icon>fullscreen</mat-icon>
+          </a>
+        </p>
+        <p *ngIf="element.link">
+          <a matTooltip="Open aircraft profile" matTooltipPosition="left" href="{{element.link}}" target="_blank">
+            <mat-icon>open_in_new</mat-icon>
+          </a>
+        </p>
+      </div>
+    </div>
+  </td>
+  </ng-container>
+
+
+<tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+<tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+class="element-row"
+[class.expanded-row]="expandedElement === element"
+(click)="expandedElement = expandedElement === element ? null : element">
+</tr>
+<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+</table>
+</ng-template>
+
+<mat-paginator
+[ngClass]="{'hidden' : !isAuthenticated()}"
+[pageSizeOptions]="[5, 10, 20, 50, dataLength]"
+showFirstLastButtons>
+</mat-paginator>

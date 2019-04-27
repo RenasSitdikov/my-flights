@@ -1,0 +1,372 @@
+<form class="form-fix-width" [formGroup]="flightForm" (ngSubmit)="onSubmit()" *ngIf="isAuthenticated()">
+  <div class="form-container">
+    <div class="header-row flight-details-header-row"><h5>Flight details</h5></div>
+    <div class="header-row aircraft-details-header-row"><h5>Aircraft details</h5></div>
+    <div class="input-column input-column-1">
+      <mat-form-field>
+        <input
+        matTooltip="Flight's departure day"
+        matTooltipPosition="above"
+        matInput
+        [matDatepicker]="datePicker"
+        placeholder="Date*"
+        id="date"
+        formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Flight number (ex. 'SQ 22' for Singapore Airlines Singapore - Newark flight)"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Fligth"
+        id="flight"
+        formControlName="flight">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.flight"
+        aria-label="Clear"
+        (click)="onClearInput('flight')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Airline name (ex. 'British Airways')"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Airline*"
+        id="airline"
+        formControlName="airline">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.airline"
+        aria-label="Clear"
+        (click)="onClearInput('airline', true)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Your seat in this flight (ex. '17F')"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Seat"
+        id="seat"
+        formControlName="seat">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.seat"
+        aria-label="Clear"
+        (click)="onClearInput('seat')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Alternative airline, that did not operate this flight, 
+        but that sold you ticket, in case of codeshare flight
+        (ex. 'Etihad' in some domestic S7 Airlines flights)"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Alt. Airline"
+        id="altairline"
+        formControlName="altairline">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.altairline"
+        aria-label="Clear"
+        (click)="onClearInput('altairline')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Alternative flight number in your ticket, in case of codeshare flight
+        (ex. 'QR 5713' for Qatar Airways, but operated by S7 Airlines flight S7 062)"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Alt. Flight"
+        id="altflight"
+        formControlName="altflight">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.altflight"
+        aria-label="Clear"
+        (click)="onClearInput('altflight')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="input-column input-column-2">
+      <mat-form-field>
+        <input
+        matTooltip="Origin airport IATA code (ex. 'DME' for Domodedovo, Moscow)"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Origin (IATA)"
+        #origin id="origin"
+        formControlName="origin">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.origin"
+        aria-label="Clear"
+        (click)="onClearInput('origin')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Origin airport and city name (ex. 'Domodedovo, Moscow')"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Origin (Name)*"
+        #forigin
+        id="forigin"
+        formControlName="forigin">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.forigin"
+        aria-label="Clear"
+        (click)="onClearInput('forigin', true)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Destination airport IATA code
+        (ex. 'JFK' for John F. Kennedy International Airport, New York)"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Destination (IATA)"
+        #destination
+        id="destination" formControlName="destination">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.destination"
+        aria-label="Clear"
+        (click)="onClearInput('destination')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Destination airport and city name
+        (ex. 'John F. Kennedy, New York')"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Destination (Name)*"
+        #fdestination
+        id="fdestination"
+        formControlName="fdestination">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.fdestination"
+        aria-label="Clear"
+        (click)="onClearInput('fdestination', true)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <div *ngIf="editMode" class="input-column-button" style="text-align: right">
+        <button
+        mat-raised-button
+        type="button"
+        (click)="onToogleDestinations()" 
+        >Toogle destinations</button>
+      </div>
+    </div>
+    <div class="input-column input-column-3">
+      <mat-form-field>
+        <input
+        matTooltip="or aircraft model (ex. 'Airbus A321', or 'Boeing 737-800')"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Aircraft type*"
+        id="aircraft"
+        formControlName="aircraft">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.aircraft"
+        aria-label="Clear"
+        (click)="onClearInput('aircraft', true)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Aircraft registration number (ex. 'VP-BTP', or 'RA-89022')"
+        matTooltipPosition="above"
+        matInput
+        type="text"
+        placeholder="Registration"
+        id="registration"
+        formControlName="registration">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.registration"
+        aria-label="Clear"
+        (click)="onClearInput('registration')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Manufacturer Serial Number - unique number of aircraft,
+        can be found in planespotters.net by looking for aircraft registration number
+        (ex. '1131', or '95039')"
+        matTooltipPosition="above"
+        matInput
+        type="text"
+        placeholder="MSN"
+        id="msn"
+        formControlName="msn">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.msn"
+        aria-label="Clear"
+        (click)="onClearInput('msn')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Aircraft's first flight date - can be found in planespotters.net
+        (for registered users) by looking for aircraft registration number. 
+        If this date doesn't exist, you can use delivery date for the very first airline"
+        matTooltipPosition="above"
+        matInput
+        [matDatepicker]="ffPicker"
+        placeholder="First flight"
+        id="ff"
+        formControlName="ff">
+        <mat-datepicker-toggle matSuffix [for]="ffPicker"></mat-datepicker-toggle>
+        <mat-datepicker #ffPicker startView="multi-year" [startAt]="ffStartDate"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="Some airlines give names for the aircrafts - can be found in planespotters.net
+        by looking for aircraft registration number.
+        (ex. 'A. Pushkin / А. Пушкин' the name of VQ-BIL aircraft of Aeroflot)"
+        matTooltipPosition="above"
+        matInput type="text"
+        placeholder="Airplane name"
+        id="name"
+        formControlName="name">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.name"
+        aria-label="Clear"
+        (click)="onClearInput('name')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="input-column input-column-4">
+      <mat-form-field>
+        <input
+        matTooltip="URL for aircraft's profile in planespotters.net or in another plane spotter's portal"
+        matTooltipPosition="above"
+        matInput type="url"
+        placeholder="Profile (URL)"
+        id="link"
+        formControlName="link">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.link"
+        aria-label="Clear"
+        (click)="onClearInput('link')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+        matTooltip="URL for aircraft's photo"
+        matTooltipPosition="above"
+        matInput type="url"
+        placeholder="Image link (URL)"
+        id="photo"
+        #photo
+        formControlName="photo">
+        <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        *ngIf="flightForm.value.photo"
+        aria-label="Clear"
+        (click)="onClearInput('photo')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <img src="{{photo.value}}" alt="">
+      <app-status-message></app-status-message>
+    </div>
+    <div class="button-row">
+
+      <div class="delete-buttons" *ngIf="editMode && !copyMode">
+      <button
+      class="button-row-element delete-button"
+      mat-raised-button
+      color="warn"
+      [disabled]="!deleteActivator.checked"
+      type="button"
+      (click)="onDelete()"
+      >Delete</button>
+
+      <mat-slide-toggle
+      class="button-row-element delete-toggler"
+      #deleteActivator
+      color="warn"
+      [checked]="false"
+      >I'm ready to delete it!</mat-slide-toggle>
+      </div>
+
+      <div class="buttons">
+      <button
+      class="button-row-element cancel-button"
+      mat-raised-button
+      color="basic"
+      type="button"
+      (click)="onCancel()"
+      >Cancel</button>
+
+      <button
+      [disabled]="flightForm.invalid"
+      class="button-row-element save-button"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      >Save</button>
+      </div>
+
+    </div>
+  </div>
+</form>

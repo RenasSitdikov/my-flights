@@ -1,0 +1,57 @@
+
+// Bootstrap breakpoints
+@import "../mixins/_functions.scss"
+@import "../mixins/_variables.scss"
+@import "../mixins/_breakpoints.scss"
+
+.other-flights
+  padding: 20px 0
+  overflow: hidden
+  display: grid
+  grid-template-columns: auto
+  grid-template-rows: auto auto
+  grid-row-gap: 10px
+  @include media-breakpoint-up(md)
+    grid-template-columns: auto 1fr auto
+    grid-template-rows: auto
+.prev-flight
+  grid-column: 1
+  grid-row: 1
+  @include media-breakpoint-up(md)
+    grid-column: 1
+    grid-row: 1
+.next-flight
+  grid-column: 1
+  grid-row: 2
+  @include media-breakpoint-up(md)
+    grid-column: 3
+    grid-row: 1
+
+.other-flight
+  display: grid
+  grid-template-columns: auto 1fr
+  grid-template-rows: auto
+  grid-column-gap: 10px
+  text-decoration: none
+  color: black
+  .other-flight-description-block
+    grid-column: 2
+    grid-row: 1
+  .flight-mini-image
+    grid-column: 1
+    grid-row: 1
+.next-flight
+  @include media-breakpoint-up(md)
+    grid-template-columns: 1fr auto
+    .other-flight-description-block
+      grid-column: 1
+      text-align: right
+    .flight-mini-image
+      grid-column: 2
+
+
+.flight-mini-image
+  img
+    height: 120px
+    @include media-breakpoint-up(sm)
+      height: 170px

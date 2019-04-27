@@ -1,0 +1,97 @@
+<app-status-message></app-status-message>
+<div class="flight-detail flight-detail-page" *ngIf="flight">
+    <div class="flight-image">
+      <a
+      matTooltip="View image in new tab"
+      matTooltipPosition="below"
+      href="{{flight.photo}}"
+      target="_blank">
+      <img class="big" src="{{flight.photo}}" alt="{{flight.aircraft}}">
+    </a>
+    </div>
+    <div class="flight-description-block flight-description-block-1">
+      <p *ngIf="flight.date"><b>Date:</b> {{flight.date.format("D MMM YYYY")}}</p>
+      <p *ngIf="flight.airline"><b>Airline:</b> {{flight.airline}}</p>
+      <p *ngIf="flight.flight"><b>Flight:</b> {{flight.flight}}</p>
+      <p *ngIf="flight.seat"><b>Seat:</b> {{flight.seat}}</p>
+      <p *ngIf="flight.origin"><b>Origin:</b> {{flight.origin}} - {{flight.forigin}}</p>
+      <p *ngIf="flight.destination"><b>Destination:</b> {{flight.destination}} - {{flight.fdestination}}</p>
+      <p *ngIf="flight.altflight"><b>Alt flight number:</b> {{flight.altflight}}</p>
+      <p *ngIf="flight.altairline"><b>Alt airline:</b> {{flight.altairline}}</p>
+    </div>
+    <div class="flight-description-block flight-description-block-2">
+      <p *ngIf="flight.aircraft"><b>Aircraft:</b> {{flight.aircraft}}</p>
+      <p *ngIf="flight.registration"><b>Registration:</b> {{flight.registration}}</p>
+      <p *ngIf="flight.msn"><b>MSN:</b> {{flight.msn}}</p>
+      <p *ngIf="flight.ff"><b>First flight:</b> {{flight.ff.format("D MMM YYYY")}}</p>
+      <p *ngIf="flight.age"><b>Age at the flight:</b> {{humanizeAge(flight.age)}}</p>
+      <p *ngIf="flight.name"><b>Airplane name:</b> {{flight.name}}</p>
+    </div>
+    <div class="flight-description-block flight-description-block-buttons">
+      <p>
+        <a matTooltip="Edit" matTooltipPosition="left" routerLink="/flights-manager/{{flight.n}}/edit">
+          <mat-icon>edit</mat-icon>
+        </a>
+      </p>
+      <p>
+        <a matTooltip="Copy" matTooltipPosition="left" routerLink="/flights-manager/{{flight.n}}/copy">
+          <mat-icon>library_add</mat-icon>
+        </a>
+      </p>
+      <p *ngIf="flight.link">
+        <a matTooltip="Open aircraft profile" matTooltipPosition="left" href="{{flight.link}}" target="_blank">
+          <mat-icon>open_in_new</mat-icon>
+        </a>
+      </p>
+    </div>
+</div>
+<div class="other-flights">
+  <a
+  matTooltip="View more information about previous flight"
+  matTooltipPosition="above"
+  routerLink="/flights/{{id - 1}}"
+  class="prev-flight other-flight"
+  *ngIf="prevFlight">
+    <div class="flight-mini-image"><img src="{{prevFlight.photo}}" alt="{{prevFlight.aircraft}}"></div>
+    <div class='flight-description-block other-flight-description-block prev-flight-description-block'>
+      <p><b>Previous flight:</b></p>
+      <p>
+        <span *ngIf="prevFlight.date">{{prevFlight.date.format("D MMM YYYY")}} </span> 
+        <span *ngIf="prevFlight.flight">{{prevFlight.flight}}</span>
+      </p>
+      <p><span *ngIf="prevFlight.origin">{{prevFlight.origin}}</span> - 
+        <span *ngIf="prevFlight.destination">{{prevFlight.destination}}</span>
+      </p>
+      <p><span *ngIf="prevFlight.airline">{{prevFlight.airline}} </span> 
+        <span *ngIf="prevFlight.aircraft">{{prevFlight.aircraft}}</span>
+      </p>
+      <p>
+        <span *ngIf="prevFlight.registration">{{prevFlight.registration}}</span>
+      </p>
+    </div>
+  </a>
+  <a
+  matTooltip="View more information about next flight"
+  matTooltipPosition="above"
+  routerLink="/flights/{{id + 1}}"
+  class="next-flight other-flight"
+  *ngIf="nextFlight">
+    <div class="flight-mini-image"><img src="{{nextFlight.photo}}" alt="{{nextFlight.aircraft}}"></div>
+    <div class='flight-description-block other-flight-description-block next-flight-description-block'>
+      <p><b>Next flight:</b></p>
+      <p>
+        <span *ngIf="nextFlight.date">{{nextFlight.date.format("D MMM YYYY")}} </span> 
+        <span *ngIf="nextFlight.flight">{{nextFlight.flight}}</span>
+      </p>
+      <p><span *ngIf="nextFlight.origin">{{nextFlight.origin}}</span> - 
+        <span *ngIf="nextFlight.destination">{{nextFlight.destination}}</span>
+      </p>
+      <p><span *ngIf="nextFlight.airline">{{nextFlight.airline}} </span> 
+        <span *ngIf="nextFlight.aircraft">{{nextFlight.aircraft}}</span>
+      </p>
+      <p>
+        <span *ngIf="nextFlight.registration">{{nextFlight.registration}}</span>
+      </p>
+    </div>
+  </a>
+</div>

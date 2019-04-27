@@ -1,0 +1,92 @@
+
+// Bootstrap breakpoints
+@import "../mixins/_functions.scss"
+@import "../mixins/_variables.scss"
+@import "../mixins/_breakpoints.scss"
+
+.text-block
+    p
+        font-size: 18px
+        text-align: center
+h1, h2
+    text-align: center
+
+.menu-block
+    a
+        display: block
+        color: black
+        text-decoration: none
+        padding: 15px 0
+        width: 100%
+        &:hover
+            background-color: rgb(240, 240, 240)
+        span
+            display: flex
+            justify-content: flex-start
+            align-items: center
+            position: relative
+            left: 46%
+            width: 150px
+            @include media-breakpoint-down(lg)
+                left: 46%
+            @include media-breakpoint-down(md)
+                left: 45%
+            @include media-breakpoint-down(sm)
+                left: 43%
+            @include media-breakpoint-down(xs)
+                left: 0
+        
+
+
+.features-block
+    .feature
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+        grid-template-rows: auto
+        grid-gap: 70px
+        margin: 70px 0
+        p
+            font-size: 18px
+        .feature-image
+            img
+                width: 100%
+        .feature-text
+            h3
+                margin-top: 0
+        .feature-image, .feature-text
+            grid-row: 1
+        @include media-breakpoint-down(md)
+            grid-gap: 50px
+        @include media-breakpoint-down(sm)
+            grid-gap: 30px
+        @include media-breakpoint-down(xs)
+            display: block
+    .feature:nth-child(odd)
+        .feature-image
+            grid-column: 1 / 4
+        .feature-text
+            grid-column: 4 / 6
+    .feature:nth-child(even)
+        .feature-image
+            grid-column: 3 / 6
+        .feature-text
+            grid-column: 1 / 3
+            @include media-breakpoint-up(sm)
+                text-align: right
+
+
+.error-message
+    color: red
+    text-align: center
+.success-message
+    color: green
+    text-align: center
+
+.verification-text
+    text-align: center
+    color: red
+    a
+        text-decoration: underline
+        cursor: pointer
+        &:hover
+            text-decoration: none
