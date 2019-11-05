@@ -1,6 +1,6 @@
 <ng-template [ngIf]="!isAuthenticated() && isRedirecting()">
     <h1>Welcome to the App!</h1>
-    <div class="text-block" *ngIf="!isAuthenticated()">
+    <div class="text-block" data-cy="start-page-text-block" *ngIf="!isAuthenticated()">
         <p><a routerLink="/auth/signin">Log in</a> to return back to your flights and add some new.</p>
         <p>Are you a new user? <a routerLink="/auth/signup">Sign up</a> in a minute and get opportunity to make full list of flights.</p>
     </div>
@@ -17,7 +17,7 @@
     <app-status-message></app-status-message>
 
     <h2>Menu: </h2>
-    <div class="menu-block">
+    <div data-cy="menu-block" class="menu-block">
         <a
         *ngFor="let item of pages.loggedin"
         routerLink="{{ item.link }}">
