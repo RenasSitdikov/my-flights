@@ -1,5 +1,5 @@
 <app-status-message></app-status-message>
-<div class="gallery-container"><div *ngFor="let flight of flights">
+<div data-cy="gallery-container" class="gallery-container"><div *ngFor="let flight of flights">
     <mat-card class="flight-card">
         <mat-card-header>
           <!-- <div
@@ -8,7 +8,7 @@
             style="background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
             background-size: cover"
           ></div> -->
-          <mat-card-title>
+          <mat-card-title data-cy="card-title">
             <span *ngIf="flight.aircraft">{{flight.aircraft}}</span>
           </mat-card-title>
           <!-- <mat-card-subtitle>{{flight.n}}. {{flight.date.format("D MMM YYYY")}}</mat-card-subtitle> -->
@@ -21,6 +21,7 @@
           <img mat-card-image src="{{flight.photo}}" alt="Aircraft photo">
         </a> -->
         <img
+          data-cy="mat-card-img"
         style="cursor: pointer"
         matTooltip="All details"
         matTooltipPosition="below"

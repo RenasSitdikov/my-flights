@@ -3,13 +3,15 @@ describe('Gallery', () => {
     cy.visit('/');
   });
 
-  it('should show gallery link', () => {
-    cy.get('.menu-block').should('contain', 'Gallery');
-  });
-
   it('should show Airbus A350 in Gallery', () => {
+    // Arrange
+    // Act
     cy.get('.menu-block').contains('Gallery').click();
+    // Assert
     cy.url().should('include', '/flights-gallery');
-    cy.get('.gallery-container').should('contain', 'Airbus A350');
+    cy.get('[data-cy=gallery-container]')
+      .contains('[data-cy=card-title]', 'Airbus A350')
+      .should('have.css', 'font-size')
+      .and('match', /20px/);
   });
 });

@@ -2,7 +2,7 @@
 <form [formGroup]="signinForm" (ngSubmit)="onSignin()" *ngIf="!toggler.checked">
     <div class="form-wrapper">
       <mat-form-field>
-        <input matInput type="email" placeholder="E-mail" id="email" formControlName="email">
+        <input matInput type="email" data-cy="email" placeholder="E-mail" id="email" formControlName="email">
         <mat-error *ngIf="signinForm.hasError('email', 'email') && !signinForm.hasError('required', 'email')">
           Please enter a valid email address
         </mat-error>
@@ -11,13 +11,13 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" id="password" formControlName="password">
+        <input matInput type="password" data-cy="password" placeholder="Password" id="password" formControlName="password">
         <mat-error *ngIf="signinForm.hasError('required', 'password')">
           Password is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <div class="button-row">
-        <button class="submit-sign-in" mat-raised-button color="primary" type="submit" [disabled]="signinForm.invalid">Sign in</button>
+        <button class="submit-sign-in" data-cy="submit-sign-in" mat-raised-button color="primary" type="submit" [disabled]="signinForm.invalid">Sign in</button>
       </div>
     </div>
   </form>
