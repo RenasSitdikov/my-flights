@@ -43,6 +43,11 @@
           <mat-icon>open_in_new</mat-icon>
         </a>
       </p>
+      <p *ngIf="flight.registration">
+        <a matTooltip="Search aircraft on planespotters.com" matTooltipPosition="left" href="{{searchLink(flight.registration)}}" target="_blank">
+          <mat-icon>search</mat-icon>
+        </a>
+      </p>
     </div>
 </div>
 <div class="other-flights">

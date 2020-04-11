@@ -73,7 +73,6 @@
           routerLink="/flights/{{flight.n}}">
             <mat-icon>fullscreen</mat-icon>
           </a>
-
           <a
           matTooltip="Open aircraft profile"
           matTooltipPosition="left" 
@@ -83,6 +82,16 @@
           target="_blank"
           >
             <mat-icon>open_in_new</mat-icon>
+          </a>
+          <a
+            matTooltip="Search aircraft on planespotters.com"
+            matTooltipPosition="left"
+            *ngIf="flight.registration"
+            mat-icon-button
+            href="{{searchLink(flight.registration)}}"
+            target="_blank"
+          >
+            <mat-icon>search</mat-icon>
           </a>
 
         </mat-card-actions>

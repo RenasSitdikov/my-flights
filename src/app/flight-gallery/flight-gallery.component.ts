@@ -7,6 +7,7 @@ import * as moment from 'moment';
 // import { AuthService } from '../auth/auth.service';
 import { StatusService } from '../shared/status.service';
 import { Title } from '@angular/platform-browser';
+import getSearchLink from '../shared/utils/searchLink';
 
 @Component({
   selector: 'app-flight-gallery',
@@ -37,6 +38,10 @@ export class FlightGalleryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  searchLink(reg: string) {
+    return getSearchLink(reg);
   }
 
   humanizeAge(age: moment.Duration) {

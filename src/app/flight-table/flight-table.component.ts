@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { StatusService } from '../shared/status.service';
 import { Title } from '@angular/platform-browser';
+import getSearchLink from '../shared/utils/searchLink';
 
 @Component({
   selector: 'app-flight-table',
@@ -80,6 +81,10 @@ export class FlightTableComponent implements OnInit, OnDestroy {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  searchLink(reg: string) {
+    return getSearchLink(reg);
   }
 
   isAuthenticated() {

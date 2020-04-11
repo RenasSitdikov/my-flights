@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { StatusService } from '../shared/status.service';
 import { Title } from '@angular/platform-browser';
+import getSearchLink from '../shared/utils/searchLink';
 // import moment = require('moment');
 
 @Component({
@@ -95,6 +96,10 @@ export class FlightComponent implements OnInit, OnDestroy {
       this.titleService.setTitle(
         date + ' ' + aircraft + ' ' + airline + ' ' + origin + ' - ' + destination + ' ' + registration);
     }
+  }
+
+  searchLink(reg: string) {
+    return getSearchLink(reg);
   }
 
   humanizeAge(age: moment.Duration) {
