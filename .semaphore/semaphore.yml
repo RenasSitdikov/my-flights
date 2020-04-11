@@ -43,6 +43,7 @@ blocks:
           commands:
             - checkout
             - cache restore node-modules-$(checksum yarn.lock),node-modules-
+            - yarn link @angular/cli
             - ng build --prod
             - cache delete website-build
             - cache store website-build dist
