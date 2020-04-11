@@ -1,0 +1,55 @@
+# For more Node.js and JavaScript information and examples, see
+# https://docs.semaphoreci.com/article/82-language-javascript-and-nodejs
+version: v1.0
+name: renas-flights
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Install dependencies
+    task:
+      jobs:
+        - name: yarn
+          commands:
+            - checkout
+            # Try to restore node modules from a previous run,
+            # first for the current version of package.lock, but if that fails
+            # get any previous bundle:
+            - cache restore node-modules-$(checksum yarn.lock),node-modules-
+            - yarn
+            # Store new content in cache:
+            - cache store node-modules-$(checksum yarn.lock) node_modules
+#  - name: Run ESLint
+#    task:
+#      jobs:
+#        - name: yarn lint
+#          commands:
+#            - checkout
+#            - cache restore node-modules-$(checksum yarn.lock),node-modules-
+#            - yarn lint
+#  - name: Run tests
+#    task:
+#      jobs:
+#        - name: yarn test
+#          commands:
+#            - checkout
+#            - cache restore node-modules-$(checksum yarn.lock),node-modules-
+#            - yarn test
+  - name: Bulid the site
+    task:
+      jobs:
+        - name: ng build --prod
+          commands:
+            - checkout
+            - cache restore node-modules-$(checksum yarn.lock),node-modules-
+            - ng build --prod
+            - cache delete website-build
+            - cache store website-build dist
+promotions:
+  - name: Deploy the site
+    pipeline_file: deploy.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - master
