@@ -44,6 +44,7 @@ blocks:
           commands:
             - checkout
             - cache restore node-modules-$(checksum yarn.lock),node-modules-
+            - nvm use 10.13.0
             - npm install -g @angular/cli@9.1.1
             - ng build --prod
             - cache delete website-build
