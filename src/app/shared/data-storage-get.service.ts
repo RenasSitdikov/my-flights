@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FlightsService } from './flights.service';
 import { Flight } from './flight.model';
-import 'rxjs/Rx';
 import * as moment from 'moment';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { StatusService } from './status.service';
 
 @Injectable()
 export class DataStorageServiceGet {
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private flightsService: FlightsService,
         private statusService: StatusService
         ) {}
@@ -20,11 +18,11 @@ export class DataStorageServiceGet {
         this.statusService.spin();
         this.http.get('https://renas-flights.firebaseio.com/flights_' + uid + '.json?auth=' + tk)
         .map(
-            (response: Response) => {
+            (response: any) => {
                 this.statusService.stopSpin();
-                const flights: Flight[] = response.json();
+                const flights: Flight[] = response;
                 if (flights) {
-                    for (let flight of flights) {
+                    for (const flight of flights) {
                         if (!flight['date']) {
                             flight['date'] = undefined;
                         } else {

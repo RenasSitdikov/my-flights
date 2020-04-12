@@ -39,8 +39,8 @@ export class FlightTableComponent implements OnInit, OnDestroy {
   columnsToDisplay = ['n', 'date', 'airline', 'origin', 'destination', 'aircraft', 'registration'];
   expandedElement: Flight | null;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
     private flightsService: FlightsService,
