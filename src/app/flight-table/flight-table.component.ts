@@ -40,7 +40,7 @@ export class FlightTableComponent implements OnInit, OnDestroy {
   expandedElement: Flight | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private flightsService: FlightsService,
